@@ -9,8 +9,10 @@
 template <typename T>
 struct ControlBlock {
   explicit ControlBlock(T* ptr)
-      :point(ptr),
-        count(1) {}
+      :point(ptr)
+  {
+    count = 1;
+  }
   void AddPointer(){
     ++count;
   }
@@ -21,13 +23,14 @@ struct ControlBlock {
     --count;
     if (!count){
       point = nullptr;
-      delete[] this;
+      delete this;
     }
   }
  public:
  private:
-  std::atomic<size_t> count;
   T* point;
+  std::atomic<size_t> count;
+
 };
 
 template <typename T>
@@ -50,13 +53,16 @@ class SharedPtr {
   };
   SharedPtr(SharedPtr&& r){
         if(std::is_move_assignable<T>::value){
-          swap(objectPtr,r.objectPtr);
-          swap(blockPtr,r.blockPtr);
+          objectPtr = r.objectPtr;
+          blockPtr = r.blockPtr;
+          r.blockPtr = nullptr;
+          r.objectPtr = nullptr;
         }else{
           throw std::runtime_error("Type not move assignable");
         }
   };
-  ~SharedPtr(){
+   ~SharedPtr(){
+    if (blockPtr!= nullptr)
       blockPtr->SubPointer();
   };
   auto operator=(const SharedPtr& r) -> SharedPtr&{
@@ -71,19 +77,22 @@ class SharedPtr {
     } else {
         throw std::runtime_error("Type not move constructible");
       }
-      return this;
+      return *this;
   };
   auto operator=(SharedPtr&& r) -> SharedPtr&{
       if(&r == this){
         std::cout << "Equal objects" << std::endl;
       }
-      if(std::is_move_constructible<T>::value){
-        std::swap(objectPtr, r.objectPtr);
-        std::swap(blockPtr, r.blockPtr);
+      if(std::is_move_assignable<T>::value){
+        reset();
+        objectPtr = r.objectPtr;
+        blockPtr = r.blockPtr;
+        r.blockPtr = nullptr;
+        r.objectPtr = nullptr;
       } else {
         throw std::runtime_error("Type not move assignable");
       }
-      return this;
+      return *this;
   };
 
   operator bool() const{
