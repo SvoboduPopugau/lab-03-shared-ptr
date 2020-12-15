@@ -30,7 +30,6 @@ add_library(shared-ptr INTERFACE)
 
 add_executable(tests
         ${CMAKE_CURRENT_SOURCE_DIR}/tests/test.cpp
-#        ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
         )
 target_include_directories(shared-ptr
         INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include
