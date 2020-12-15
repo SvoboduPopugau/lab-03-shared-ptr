@@ -32,16 +32,11 @@ add_executable(tests
         ${CMAKE_CURRENT_SOURCE_DIR}/tests/test.cpp
 #        ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
         )
-add_executable(demo
-        ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
-        )
-
 target_include_directories(shared-ptr
         INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include
         )
 
 target_link_libraries(tests GTest::gtest_main shared-ptr)
-target_link_libraries(demo GTest::gtest_main shared-ptr)
 
 enable_testing()
 add_test(NAME unit_tests COMMAND tests)
