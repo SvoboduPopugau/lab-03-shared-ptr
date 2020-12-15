@@ -23,7 +23,7 @@ struct ControlBlock {
     --count;
     if (!count){
       point = nullptr;
-      delete this;
+      delete[] this;
     }
   }
  public:
