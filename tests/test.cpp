@@ -27,15 +27,15 @@ TEST(Constructors, ConstructorForValue){
   EXPECT_TRUE(Example2);
 }
 TEST(Constructors, ConstructorForStruct){
-  struct Test{
+  struct TestStruct{
     int val = 10;
   };
-  Test TestStruct;
-  SharedPtr<Test> Example1(&TestStruct);
-  SharedPtr<Test> Example2(Example1);
+  TestStruct Tested;
+  SharedPtr<TestStruct> Example1(&Tested);
+  SharedPtr<TestStruct> Example2(Example1);
 
-  EXPECT_EQ(Example1.get(),&TestStruct);
-  EXPECT_EQ(Example2.get(),&TestStruct);
+  EXPECT_EQ(Example1.get(),&Tested);
+  EXPECT_EQ(Example2.get(),&Tested);
   EXPECT_EQ(Example1.use_count(),Example2.use_count());
   EXPECT_EQ(Example2.use_count(), 2);
   EXPECT_EQ(Example1.use_count(),2);
