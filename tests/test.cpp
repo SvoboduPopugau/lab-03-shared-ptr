@@ -134,6 +134,25 @@ TEST(Methods,SwapMethod){
   EXPECT_TRUE(Example2);
   EXPECT_TRUE(Example3);
 }
+TEST(Methods, VoidResetMethod){
+  int val = 10;
+  SharedPtr<int> ptr1(&val);
+  EXPECT_EQ(ptr1.get(), &val);
+  EXPECT_EQ(ptr1.use_count(), 1);
+  ptr1.reset();
+  EXPECT_EQ(ptr1.get(), nullptr);
+  EXPECT_EQ(ptr1.use_count(), 0);
+}
+TEST(Methods, PtrResetMethod){
+  int val = 10;
+  SharedPtr<int> ptr1(&val);
+  EXPECT_EQ(ptr1.get(), &val);
+  EXPECT_EQ(ptr1.use_count(), 1);
+  int val1 = 56;
+  ptr1.reset(&val1);
+  EXPECT_EQ(ptr1.get(), &val1);
+  EXPECT_EQ(ptr1.use_count(), 1);
+}
 TEST(Operators, BoolOperator){
   int val = 10;
 
