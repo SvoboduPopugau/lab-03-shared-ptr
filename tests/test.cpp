@@ -184,3 +184,7 @@ TEST(Operators, EquelOperator){
                std::runtime_error);
   delete Object;
 }
+TEST(MoveTest, IsConstructAssignable){
+  EXPECT_TRUE(std::is_move_assignable<int>::value);
+  EXPECT_TRUE(std::is_move_constructible<int>::value);
+}
