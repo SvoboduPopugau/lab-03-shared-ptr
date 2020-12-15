@@ -21,10 +21,6 @@ struct ControlBlock {
   }
   void SubPointer(){
     --count;
-    if (!count){
-      point = nullptr;
-      delete[] this;
-    }
   }
  public:
  private:
@@ -62,8 +58,11 @@ class SharedPtr {
         }
   };
    ~SharedPtr(){
-    if (blockPtr!= nullptr)
-      blockPtr->SubPointer();
+    if (blockPtr!= nullptr) {
+       blockPtr->SubPointer();
+       if(!blockPtr->GetCount())
+         delete[] blockPtr;
+     }
   };
   auto operator=(const SharedPtr& r) -> SharedPtr&{
     if(&r == this){
