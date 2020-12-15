@@ -1,7 +1,7 @@
 // Copyright 2020 Your Name <your_email>
 
-#ifndef INCLUDE_HEADER_HPP_
-#define INCLUDE_HEADER_HPP_
+#ifndef INCLUDE_SHAREDPTR_HPP_
+#define INCLUDE_SHAREDPTR_HPP_
 #include <atomic>
 #include <cstddef>
 #include <iostream>
@@ -9,10 +9,8 @@
 template <typename T>
 struct ControlBlock {
   explicit ControlBlock(T* ptr)
-      :point(ptr)
-  {
-    count = 1;
-  }
+      :point(ptr),
+        count(1){}
   void AddPointer(){
     ++count;
   }
@@ -134,4 +132,4 @@ class SharedPtr {
   T* objectPtr;
   ControlBlock<T>* blockPtr;
 };
-#endif // INCLUDE_HEADER_HPP_
+#endif // INCLUDE_SHAREDPTR_HPP_
