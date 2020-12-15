@@ -152,6 +152,7 @@ TEST(Constructors, NotAssignConstructible) {
                std::runtime_error);
   EXPECT_THROW(SharedPtr<NotAssignConstructible> ptr3(std::move(ptr1)),
                std::runtime_error);
+  delete Object;
 }
 TEST(Operators, EquelOperator){
   NotAssignConstructible* Object = new NotAssignConstructible;
@@ -162,4 +163,5 @@ TEST(Operators, EquelOperator){
                std::runtime_error);
   EXPECT_THROW(ptr5 = std::move(ptr1),
                std::runtime_error);
+  delete Object;
 }

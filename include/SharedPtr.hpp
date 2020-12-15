@@ -61,7 +61,7 @@ class SharedPtr {
     if (blockPtr!= nullptr) {
        blockPtr->SubPointer();
        if(!blockPtr->GetCount())
-         delete[] blockPtr;
+         delete blockPtr;
      }
   };
   auto operator=(const SharedPtr& r) -> SharedPtr&{
@@ -110,12 +110,12 @@ class SharedPtr {
       objectPtr = nullptr;
       blockPtr -> SubPointer();
       if (!blockPtr->GetCount())
-        delete [] blockPtr;
+        delete blockPtr;
       blockPtr = nullptr;
   };
   void reset(T* ptr){
+    reset();
     objectPtr = ptr;
-    blockPtr -> SubPointer();
     blockPtr = new ControlBlock<T>(ptr);
 
   };
