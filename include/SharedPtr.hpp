@@ -109,6 +109,8 @@ class SharedPtr {
   void reset(){
       objectPtr = nullptr;
       blockPtr -> SubPointer();
+      if (!blockPtr->GetCount())
+        delete [] blockPtr;
       blockPtr = nullptr;
   };
   void reset(T* ptr){
